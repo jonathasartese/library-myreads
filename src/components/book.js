@@ -5,11 +5,16 @@ import ShelfChanger from './ShelfChanger'
 
 class Book extends Component {
 	static PropTypes = {
-		book: PropTypes.object.isRequired
+		book: PropTypes.object.isRequired,
+    updateShelfForBook: PropTypes.func.isRequired
 	}
 
+  changeShelfSelction = (shelfID) => {
+    this.props.updateShelfForBook(shelfID, this.props.book.id);
+  }
+
 	render() {
-		const { book, shelfID } = this.props
+		const { book } = this.props
 
 		return (
 			<div className="book">
@@ -21,7 +26,8 @@ class Book extends Component {
           		backgroundImage: `url("${book.imageLinks.thumbnail}")` 
         			}}>
 				  </div>
-          <ShelfChanger selectedShelfID={book.shelf}/>
+          <ShelfChanger selectedShelfID={book.shelf}
+            onChangeShelfSelection={this.changeShelfSelction}/>
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors.join(', ')}</div>

@@ -1,8 +1,8 @@
 import React from 'react'
+import { Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import Shelf from './components/Shelf'
-import * as Shelves from './ShelfTypeConsants'
+import ListShelves from './components/ListShelves'
 
 class BooksApp extends React.Component {
 
@@ -24,14 +24,24 @@ class BooksApp extends React.Component {
     })
   }
 
+  updateShelfForBook = (shelfID, bookID) => {
+    const books = [...this.state.books];
+    const book = books.find((book) => {
+      return book.id === bookID;
+    });
+    BooksAPI.update(book, shelfID);
+    book.shelf = shelfID;
+    this.setState({ books });
+  }
+
   render() {
 
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+        <Route exact path='/search' render={() => (
           <div className="search-books">
             <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
+              <Link to='/' className="close-search">Close</Link>
               <div className="search-books-input-wrapper">
                 <input type="text" placeholder="Search by title or author"/>
               </div>
@@ -41,29 +51,16 @@ class BooksApp extends React.Component {
               <ol className="books-grid"></ol>
             </div>
           </div>
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>My Library</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                {Shelves.Types.map(
-                  (shelf, index) => 
-                    <Shelf 
-                      key={index} 
-                      shelf={shelf} 
-                      books={this.state.books.filter(
-                              (book) => book.shelf === shelf.id)}
-                    />
-                )}
-              </div>
-            </div>
+        )}/>
+
+        <Route exact path='/' render={() => (
+          <div>
+            <ListShelves books={this.state.books} updateShelfForBook={this.updateShelfForBook} />
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to='/search'>Add Contact</Link>
             </div>
           </div>
-        )}
+        )}/>
       </div>
     )
   }

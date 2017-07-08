@@ -5,11 +5,13 @@ import Book from './Book'
 class Shelf extends Component {
 	static PropTypes = {
     books: PropTypes.array,
-		shelf: PropTypes.object.isRequired
+		shelf: PropTypes.object.isRequired,
+    handleUpdateShelfForBook: PropTypes.func.isRequired
 	}
 
+
 	render() {
-		const { books, shelf } = this.props
+		const { books, shelf, handleUpdateShelfForBook } = this.props
 		return (
 			<div className="bookshelf">
         <h2 className="bookshelf-title">{shelf.title}</h2>
@@ -19,7 +21,9 @@ class Shelf extends Component {
               {
                 books.map(book => 
                   <li key={book.id} >
-                    <Book book={book}/>
+                    <Book book={book} 
+                          updateShelfForBook={handleUpdateShelfForBook}
+                    />
                   </li>
                 )
               } 
