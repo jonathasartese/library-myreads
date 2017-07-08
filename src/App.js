@@ -2,14 +2,9 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import Shelf from './components/Shelf'
+import * as Shelves from './ShelfTypeConsants'
 
 class BooksApp extends React.Component {
-
-  shelves = [
-    {title: 'Currently Reading', id: 'currentlyReading'},
-    {title: 'Want to Read', id: 'wantToRead'}, 
-    {title: 'Read', id: 'read'},
-  ]
 
   state = {
     /**
@@ -53,7 +48,7 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                {this.shelves.map(
+                {Shelves.Types.map(
                   (shelf, index) => 
                     <Shelf 
                       key={index} 
