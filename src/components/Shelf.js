@@ -9,15 +9,14 @@ class Shelf extends Component {
     handleUpdateShelfForBook: PropTypes.func.isRequired
 	}
 
-
 	render() {
 		const { books, shelf, handleUpdateShelfForBook } = this.props
 		return (
 			<div className="bookshelf">
         <h2 className="bookshelf-title">{shelf.title}</h2>
         <div className="bookshelf-books">
-          { books && 
-            <BookList books={books} 
+          { books &&
+            <BookList books={books}
               handleUpdateShelfForBook={handleUpdateShelfForBook}/>
           }
         </div>
@@ -25,7 +24,7 @@ class Shelf extends Component {
 		)
 	}
 
-} 
+}
 
 
 export default Shelf

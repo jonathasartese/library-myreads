@@ -14,6 +14,10 @@ class Search extends Component {
     query: ''
   }
 
+  /**
+  * @description Update search query
+  * @param {string} query
+  */
   updateQuery = (query) => (
     this.setState({
       query: query.trim()
@@ -27,11 +31,11 @@ class Search extends Component {
     let showingBooks = [];
 
     if (query) {
-      // escapeRegExp to escape special charaters that might be special for regex  
-      // 'i' just means the matching is not case sensitive. 
+      // escapeRegExp to escape special charaters that might be special for regex
+      // 'i' just means the matching is not case sensitive.
       const match = new RegExp(escapeRegExp(query), 'i')
       showingBooks = books.filter(
-                          (book) => match.test(book.title) || 
+                          (book) => match.test(book.title) ||
                                     match.test(book.authors))
     }
 
@@ -42,19 +46,19 @@ class Search extends Component {
           <div className="search-books-input-wrapper">
             <input type="text" placeholder="Search by title or author"
               value={query}
-              onChange={(e) => this.updateQuery(e.target.value)} 
+              onChange={(e) => this.updateQuery(e.target.value)}
           />
           </div>
         </div>
 
         <div className="search-books-results">
-          <BookList books={showingBooks} 
+          <BookList books={showingBooks}
             handleUpdateShelfForBook={updateShelfForBook}/>
         </div>
       </div>
 		)
 	}
-} 
+}
 
 
 export default Search

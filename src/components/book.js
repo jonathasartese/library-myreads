@@ -9,6 +9,10 @@ class Book extends Component {
     updateShelfForBook: PropTypes.func.isRequired
 	}
 
+  /**
+  * @description Change Shelf Selection
+  * @param {string} shelfID
+  */
   changeShelfSelction = (shelfID) => {
     this.props.updateShelfForBook(shelfID, this.props.book.id);
   }
@@ -19,11 +23,11 @@ class Book extends Component {
 		return (
 			<div className="book">
         <div className="book-top">
-          <div className="book-cover" 
-          	style={{ 
+          <div className="book-cover"
+          	style={{
           		width: 128,
           		height: 193,
-          		backgroundImage: `url("${book.imageLinks.thumbnail}")` 
+          		backgroundImage: `url("${book.imageLinks.thumbnail}")`
         			}}>
 				  </div>
           <ShelfChanger selectedShelfID={book.shelf}
@@ -35,7 +39,7 @@ class Book extends Component {
 		)
 	}
 
-} 
+}
 
 
 export default Book

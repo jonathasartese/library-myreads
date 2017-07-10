@@ -11,13 +11,19 @@ class BooksApp extends React.Component {
     books: []
   }
 
-  /** Get all books. */
+  /**
+  * @description Set books into state from books API
+  */
   componentDidMount = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books });
     })
   }
 
+  /**
+  * @description Update shelf for a book. Update persists in the server.
+  * @param {string} query
+  */
   updateShelfForBook = (shelfID, bookID) => {
     const books = [...this.state.books];
     const book = books.find((book) => {

@@ -14,18 +14,18 @@ class BookList extends Component {
 		return (
 			<ol className="books-grid">
         {
-          books.map(book => 
+          books.map(book =>
             <li key={book.id} >
-              <Book book={book} 
+              <Book book={book}
                     updateShelfForBook={handleUpdateShelfForBook}
               />
             </li>
           )
-        } 
+        }
       </ol>
 		)
 	}
 
-} 
+}
 
 export default BookList
