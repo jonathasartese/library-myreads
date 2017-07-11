@@ -7,5 +7,5 @@ This is the page where you can categorize your books under `read`, `currently re
 ## Search
 This is the page where you can search books and also add to your collection. Some search terms can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md)
 
-##Install
+## Install
 `npm intall` then `npm start` on project root directory.
