@@ -2,51 +2,46 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BookList from './BookList'
-import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from '../BooksAPI'
 
 class Search extends Component {
 	static PropTypes = {
-		books: PropTypes.array,
     updateShelfForBook: PropTypes.func.isRequired
 	}
 
   state = {
+    showingBooks: [],
     query: ''
   }
 
   /**
-  * @description Update search query
+  * @description Search books.
   * @param {string} query
   */
-  updateQuery = (query) => (
-    this.setState({
-      query: query.trim()
+  searchBooks = (query) => {
+    this.setState({ query });
+
+    BooksAPI.search(query, 20).then((showingBooks) => {
+      if (showingBooks && !showingBooks.error) {
+        this.setState({ showingBooks })
+      } else {
+        this.setState({ showingBooks: []})
+      }
     })
-  )
+  }
 
 	render() {
-    const { books, updateShelfForBook} = this.props;
-    const { query } = this.state;
-
-    let showingBooks = [];
-
-    if (query) {
-      // escapeRegExp to escape special charaters that might be special for regex
-      // 'i' just means the matching is not case sensitive.
-      const match = new RegExp(escapeRegExp(query), 'i')
-      showingBooks = books.filter(
-                          (book) => match.test(book.title) ||
-                                    match.test(book.authors))
-    }
+    const { updateShelfForBook} = this.props;
+    const { showingBooks, query } = this.state;
 
 		return (
 			<div className="search-books">
         <div className="search-books-bar">
           <Link to='/' className="close-search">Close</Link>
           <div className="search-books-input-wrapper">
-            <input type="text" placeholder="Search by title or author"
+            <input type="text" placeholder="Search"
               value={query}
-              onChange={(e) => this.updateQuery(e.target.value)}
+              onChange={(e) => this.searchBooks(e.target.value)}
           />
           </div>
         </div>

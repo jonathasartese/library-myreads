@@ -22,16 +22,23 @@ class BooksApp extends React.Component {
 
   /**
   * @description Update shelf for a book. Update persists in the server.
-  * @param {string} query
+  * @param {string} shelfID
+  * @param {object} book
   */
-  updateShelfForBook = (shelfID, bookID) => {
-    const books = [...this.state.books];
-    const book = books.find((book) => {
-      return book.id === bookID;
+  updateShelfForBook = (shelfID, book) => {
+    BooksAPI.update(book, shelfID).then(() => {
+      const books = [...this.state.books];
+      const existingBook = books.find((b) => {
+        return b.id === book.id;
+      });
+      if (existingBook) {
+        existingBook.shelf = shelfID;
+      } else {
+        books.push(book);
+      }
+
+      this.setState({ books });
     });
-    BooksAPI.update(book, shelfID);
-    book.shelf = shelfID;
-    this.setState({ books });
   }
 
   render() {
@@ -39,7 +46,7 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route exact path='/search' render={() => (
-          <Search books={this.state.books} updateShelfForBook={this.updateShelfForBook}/>
+          <Search updateShelfForBook={this.updateShelfForBook}/>
         )}/>
 
         <Route exact path='/' render={() => (
