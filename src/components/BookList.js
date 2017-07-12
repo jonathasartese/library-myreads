@@ -5,12 +5,12 @@ import Book from './Book'
 class BookList extends Component {
 	static PropTypes = {
 		books: PropTypes.array,
-    handleUpdateShelfForBook: PropTypes.func.isRequired
+    handleUpdateShelfForBook: PropTypes.func.isRequired,
+    isBookOnShelf: PropTypes.func
 	}
 
 	render() {
-		const { books, handleUpdateShelfForBook } = this.props
-
+		const { books, handleUpdateShelfForBook, isBookOnShelf } = this.props
 		return (
 			<ol className="books-grid">
         {
@@ -18,6 +18,7 @@ class BookList extends Component {
             <li key={book.id} >
               <Book book={book}
                     updateShelfForBook={handleUpdateShelfForBook}
+                    isBookOnShelf={isBookOnShelf}
               />
             </li>
           )

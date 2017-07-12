@@ -6,7 +6,8 @@ import * as BooksAPI from '../BooksAPI'
 
 class Search extends Component {
 	static PropTypes = {
-    updateShelfForBook: PropTypes.func.isRequired
+    updateShelfForBook: PropTypes.func.isRequired,
+    booksOnShelf: PropTypes.array
 	}
 
   state = {
@@ -30,8 +31,20 @@ class Search extends Component {
     })
   }
 
+  /**
+  * @description Takes in a book ID and returns books's shelfID if
+                 the book is on a shelf. Else, false.
+  * @param {string} bookID
+  */
+  isBookOnShelf = (bookID) => {
+    const book = this.props.booksOnShelf.find((b) => {
+        return b.id === bookID;
+      })
+    return book ? book.shelf : false;
+  }
+
 	render() {
-    const { updateShelfForBook} = this.props;
+    const { updateShelfForBook } = this.props;
     const { showingBooks, query } = this.state;
 
 		return (
@@ -45,10 +58,11 @@ class Search extends Component {
           />
           </div>
         </div>
-
+s
         <div className="search-books-results">
           <BookList books={showingBooks}
-            handleUpdateShelfForBook={updateShelfForBook}/>
+            handleUpdateShelfForBook={updateShelfForBook}
+            isBookOnShelf={this.isBookOnShelf}/>
         </div>
       </div>
 		)

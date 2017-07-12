@@ -13,13 +13,13 @@ class ShelfChanger extends Component {
 
 		return (
 			<div className="book-shelf-changer">
-        <select 
-          value={selectedShelfID} 
-          onChange={(e) => onChangeShelfSelection(e.target.value)} 
+        <select
+          value={selectedShelfID}
+          onChange={(e) => onChangeShelfSelection(e.target.value)}
         >
-          <option value="none" disabled>Move to...</option>
+          <option value="0" disabled>Move to...</option>
           {
-            Shelves.Types.map((shelf) => 
+            Shelves.Types.map((shelf) =>
               <option value={shelf.id} key={shelf.id} >
                 {shelf.title}
               </option>
@@ -30,7 +30,7 @@ class ShelfChanger extends Component {
       </div>
 		)
 	}
-} 
+}
 
 
 export default ShelfChanger

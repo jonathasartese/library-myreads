@@ -34,6 +34,7 @@ class BooksApp extends React.Component {
       if (existingBook) {
         existingBook.shelf = shelfID;
       } else {
+        book.shelf = shelfID;
         books.push(book);
       }
 
@@ -41,12 +42,15 @@ class BooksApp extends React.Component {
     });
   }
 
+
   render() {
 
     return (
       <div className="app">
         <Route exact path='/search' render={() => (
-          <Search updateShelfForBook={this.updateShelfForBook}/>
+          <Search updateShelfForBook={this.updateShelfForBook}
+            booksOnShelf={this.state.books}
+          />
         )}/>
 
         <Route exact path='/' render={() => (

@@ -5,7 +5,8 @@ import ShelfChanger from './ShelfChanger'
 class Book extends Component {
 	static PropTypes = {
 		book: PropTypes.object.isRequired,
-    updateShelfForBook: PropTypes.func.isRequired
+    updateShelfForBook: PropTypes.func.isRequired,
+    isBookOnShelf: PropTypes.func,
 	}
 
   /**
@@ -17,8 +18,14 @@ class Book extends Component {
   }
 
 	render() {
-		const { book } = this.props;
+		const { book, isBookOnShelf } = this.props;
 
+    if (isBookOnShelf) {
+      const shelfID = isBookOnShelf(book.id);
+      if (shelfID) {
+        book.shelf = shelfID;
+      }
+    }
 		return (
 			<div className="book">
         <div className="book-top">
